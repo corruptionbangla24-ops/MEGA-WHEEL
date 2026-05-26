@@ -248,24 +248,24 @@
             const targetIdx = prizesMap.indexOf(cleanText);
             const prizeBengali = (targetIdx !== -1) ? items[targetIdx] : cleanText;
 
-            if (winAmount > 0) {
-                // 🎯 [মেগা প্রফিট সাউন্ড ফিল্টার লক ভাই]: ৫ গুণের বেশি জিতলে bigwin1.mp3 অন্যথায় win1.mp3 বাজবে ভাই
+                        // 🎯 [০.৫ দশমিক উইন ডিসপ্লে ফিল্টার লক ভাই ভাই]: এটি ১ টাকা জিতলেও স্ক্রিনে কড়া গ্রিন সাকসেস বার ফায়ার করবে!
+            if (winAmount > 0 || parseFloat(prizeText) > 0) {
                 try {
                     if (winAmount >= (currentBet * 5)) {
-                        playAudio('bigwin');
+                        playAudio('bigwin'); // ৫ গুণের বেশি জিতলে bigwin1.mp3 বাজবে ভাই
                     } else {
-                        playAudio('win');
+                        playAudio('win'); // সাধারণ দশমিক বা নরমাল জিতলে win1.mp3 বাজবে ভাই
                     }
                 } catch(e) { console.log("Win audio error"); }
 
                 msgBox.className = "win-status-container win-glow-bar";
                 textMsg.innerText = `🏆 মেগা উইন!! চাকা থেমেছে: ${prizeBengali} এর ঘরে (৳${winAmount})`;
             } else {
+                // চাকা পিউর ০ এর ঘরে থামলেই কেবল লস বার শো করবে ভাই ভাই!
                 msgBox.className = "win-status-container lose-glow-bar";
-                
-                // 🎯 চাকা ০ তে থামলে প্লেয়ারকে স্পষ্ট বাংলা ০ এর ঘর নোটিশ করবে ভাই ভাই!
                 textMsg.innerText = `❌ চাকা থেমেছে: ${prizeBengali} এর ঘরে। এই রাউন্ডে ভাগ্য সহায় হয়নি ভাই!`;
             }
+
 
             document.getElementById("user-balance").innerText = balance.toFixed(2);
             stopWheelState();
