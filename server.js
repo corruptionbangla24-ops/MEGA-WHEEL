@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 // 🎰 [উইনগো কালার ট্রেড ওরিজিনাল ডোমেইন সিঙ্ক]
-const MAIN_SITE_URL = "https://onrender.com"; 
+const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
 
 // 🎡 চাকার ১২টি ঘরের ডাইনামিক রেট মেমোরি ইনডেক্স ভাই ভাই
 const prizeMatrix = [
