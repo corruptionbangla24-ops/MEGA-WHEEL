@@ -19,9 +19,20 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: #060913; color: w
 
 .wheel { width: 100%; height: 100%; background: #111; border-radius: 50%; position: relative; overflow: hidden; border: 4px solid #fff; transition: transform 5s cubic-bezier(0.1, 0.8, 0.1, 1); }
 .wheel-segment { position: absolute; width: 50%; height: 50%; top: 0; right: 0; transform-origin: 0% 100%; clip-path: polygon(0 100%, 100% 0, 100% 45%); }
+/* 🎯 [রয়্যাল চাকা টেক্সট সোজা ও সেন্টার লকিং সিএসএস ভাই] */
+.segment-content { 
+    position: absolute; 
+    left: 45%; 
+    top: 50%; 
+    color: #fff; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    letter-spacing: 0.3px; 
+    transform-origin: center center; 
+    text-shadow: 2px 2px 4px #000; 
+    white-space: nowrap;
+}
 
-/* চাকার ভেতরের টেক্সট বিন্যাস লকিং ভাই */
-.segment-content { position: absolute; left: 35%; top: 45%; width: 65%; color: #fff; font-weight: 900; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; transform-origin: left center; text-shadow: 1px 1px 3px #000; }
 
 /* চাকার সেন্ট্রাল গোল্ডেন কোড পিন ভাই ভাই */
 .wheel-center-pin { position: absolute; width: 45px; height: 45px; background: radial-gradient(#fff, #f1c40f); border: 4px solid #b38600; border-radius: 50%; color: #b38600; font-weight: 900; font-size: 18px; z-index: 40; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
