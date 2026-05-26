@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const MAIN_SITE_URL = "https://onrender.com"; 
+const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
 
 // 🎡 [আপনার স্কেচ অনুযায়ী ওরিжилনাল ৩২-ঘরের কড়া ৯৫% RTP ম্যাট্রিক্স লকিং সিস্টেম ভাই ভাই]
 const prizeMatrix = [
