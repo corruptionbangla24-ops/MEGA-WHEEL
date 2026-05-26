@@ -1,7 +1,7 @@
 {
-  "name": "lucky-wheel-fortune-master",
+  "name": "lucky-wheel-multiplier-master",
   "version": "1.0.0",
-  "description": "Lucky Wheel Gold Fortune Balance Synced Game Engine",
+  "description": "Lucky Wheel 24-Segments Multiplier Game with 1-2000BDT Bet Range",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
