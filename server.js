@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const MAIN_SITE_URL = "https://onrender.com"; 
+const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
 
 // 🎡 [আপনার রিকোয়ারমেন্ট অনুযায়ী পিউর ২৪টি ঘরের ওরিজিনাল মাল্টিপ্লায়ার ম্যাট্রিক্স লক ভাই ভাই!]
 const prizeMatrix = [
