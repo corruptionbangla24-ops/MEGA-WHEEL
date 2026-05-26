@@ -124,15 +124,18 @@ app.post('/api/wheel-spin', async (req, res) => {
         // 📊 ৩২ ঘরের জন্য ওরিজিনাল কৌণিক দূরত্ব ১১.২৫ ডিগ্রি (৩৬০ / ৩২ = ১১.২৫) ভাই ভাই!
         const targetAngle = (prizeIndex * 11.25) + 5.625; // প্রতি ঘরের একদম সেন্ট্রাল পেটে কাঁটা ব্রেক করার ম্যাথ
 
+                // 🎯 [মেগা ০.৫ এবং ০.৩ দশমিক উইন ক্যালকুলেটর বুস্টার লক ভাই ভাই]
         let winAmount = 0;
         let dbAction = "bet";
         let dbAmount = reqAmount;
 
-        if (selectedPrize.multiplier > 0) {
-            winAmount = Math.floor(reqAmount * selectedPrize.multiplier);
+        // ০ ছাড়া যেকোনো সংখ্যা বা গুণিতক পড়া মানেই প্লেয়ার কিছু না কিছু টাকা জিতেছে ভাই!
+        if (parseFloat(selectedPrize.multiplier) > 0) {
+            winAmount = Math.floor(reqAmount * parseFloat(selectedPrize.multiplier));
             dbAction = "win";
             dbAmount = parseFloat(winAmount);
         }
+
 
         let phpPayload = {
             action: dbAction,
