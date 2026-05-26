@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ROYAL LUCKY WHEEL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 🎰 ক্যাসিনো হেডার প্যানেল -->
+    <div class="header">
+        <div class="brand">
+            <div class="name">LUCKY WHEEL</div>
+            <div class="game">ROYAL FORTUNE</div>
+        </div>
+        <div class="balance-box">৳ <span id="user-balance">0.00</span></div>
+    </div>
+
+    <!-- 🎡 ৩ডি গোল্ডেন ফরচুন হুইল এরিয়া (ছবি ছাড়া পিউর কোডিং ভাই ভাই) -->
+    <div class="wheel-outer-zone">
+        <div class="pointer">🔺</div>
+        <div class="wheel" id="main-wheel">
+            <!-- জাভাস্ক্রিপ্ট দিয়ে চাকার ১২টি রাজকীয় ঘর তৈরি হবে ভাই ভাই -->
+        </div>
+        <button class="wheel-center-btn" id="spin-btn" onclick="handleWheelSpin()">SPIN</button>
+    </div>
+
+    <!-- 🏆 ইন-লাইন লাইভ স্কোরিং মেসেজ বার ভাই ভাই -->
+    <div class="win-status-container" id="win-status-box">
+        <span id="win-text-msg">আপনার বাজি ধরুন এবং চাকা ঘোরান!</span>
+    </div>
+
+    <!-- 🎛️ কন্ট্রোল প্যানেল এরিয়া -->
+    <div class="footer-controls">
+        <div class="quick-bets">
+            <button class="q-btn active-bet" onclick="setQuickBet(10)">৳১০</button>
+            <button class="q-btn" onclick="setQuickBet(50)">৳৫০</button>
+            <button class="q-btn" onclick="setQuickBet(100)">৳১০০</button>
+            <button class="q-btn" onclick="setQuickBet(500)">৳৫০০</button>
+        </div>
+
+        <div class="play-section">
+            <div class="bet-selector">
+                <button class="bet-btn-nav" onclick="adjustBet('minus')">−</button>
+                <div style="text-align: center;">
+                    <div style="font-size: 10px; color: #aaa;">BET</div>
+                    <div style="font-size: 16px; font-weight: bold;" id="bet-display">৳১০</div>
+                </div>
+                <button class="bet-btn-nav" onclick="adjustBet('plus')">+</button>
+            </div>
+
+            <div class="icon-group">
+                <button class="icon-btn" id="auto-btn" onclick="toggleAuto()">🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔌 [উইনগো কালার ট্রেড সিঙ্ক - ইউনিভার্সাল সকেট ইঞ্জিন লাইব্রেরি ভাই] -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlUserId = urlParams.get('userId') || urlParams.get('id') || urlParams.get('username') || "guest_user";
+        const urlWallet = urlParams.get('wallet') || "main";
+        
+        const SERVER_URL = window.location.origin;
+
+        let balance = 0.00;
+        let currentBet = 10;
+        let isSpinning = false;
+        let isAuto = false;
+        let autoInterval = null;
+        let currentRotation = 0;
+
+        // 🎡 চাকার ভেতরের ওরিজিনাল ১২টি পুরস্কারের রাজকীয় ঘর ভাই ভাই
+        const prizes = [
+            { text: "iPhone", color: "#ee5253" },
+            { text: "৳০", color: "#2c3e50" },
+            { text: "৳১০০", color: "#10ac84" },
+            { text: "৳০", color: "#34495e" },
+            { text: "Motorcycle", color: "#ff9f43" },
+            { text: "৳০", color: "#2c3e50" },
+            { text: "৳৫০০", color: "#10ac84" },
+            { text: "৳০", color: "#34495e" },
+            { text: "Car", color: "#00d2d3" },
+            { text: "৳০", color: "#2c3e50" },
+            { text: "৳১০০০", color: "#f1c40f" },
+            { text: "৳০", color: "#34495e" }
+        ];
+
+        // পিউর সিএসএস সেগমেন্ট জেনারেটর ইঞ্জিন লক ভাই ভাই
+        const wheel = document.getElementById("main-wheel");
+        prizes.forEach((prize, index) => {
+            const angle = (360 / prizes.length) * index;
+            const segment = document.createElement("div");
+            segment.className = "wheel-segment";
+            segment.style.backgroundColor = prize.color;
+            segment.style.transform = `rotate(${angle}deg)`;
+            
+            segment.innerHTML = `
+                <div class="segment-content" style="transform: rotate(15deg);">
+                    ${prize.text}
+                </div>
+            `;
+            wheel.appendChild(segment);
+        });
+
+        if (typeof io !== 'undefined') {
+            const socket = io();
+            socket.on("balanceUpdate", (data) => {
+                if (data && data.username === urlUserId) {
+                    if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+                    fetchLiveBalance();
+                }
+            });
+        }
+
+        async function fetchLiveBalance() {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/wheel-balance?userId=${urlUserId}&wallet=${urlWallet}`);
+                const data = await response.json();
+                if (data && data.success) {
+                    balance = parseFloat(data.balance);
+                    document.getElementById("user-balance").innerText = balance.toFixed(2);
+                }
+            } catch (e) { console.error("Balance loading lag"); }
+        }
+
+        window.onload = () => {
+            if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+            fetchLiveBalance();
+        };
+
+        function setQuickBet(val) {
+            if (isSpinning) return;
+            currentBet = val;
+            document.getElementById("bet-display").innerText = `৳${currentBet}`;
+            document.querySelectorAll(".q-btn").forEach(b => b.classList.remove("active-bet"));
+            event.target.classList.add("active-bet");
+            playAudio('click');
+        }
+
+        function adjustBet(action) {
+            if (isSpinning) return;
+            if (action === 'minus' && currentBet > 10) currentBet -= 10;
+            if (action === 'plus' && currentBet < 50000) currentBet += 10;
+            document.getElementById("bet-display").innerText = `৳${currentBet}`;
+            playAudio('click');
+        }
+
+        function toggleAuto() {
+            isAuto = !isAuto;
+            document.getElementById("auto-btn").classList.toggle("active", isAuto);
+            if (isAuto && !isSpinning) handleWheelSpin();
+        }
+
+        async function handleWheelSpin() {
+            if (isSpinning) return;
+
+            document.getElementById("win-status-box").className = "win-status-container";
+            document.getElementById("win-text-msg").innerText = "🎰 ভাগ্যের চাকা অন ফায়ার...";
+
+            isSpinning = true;
+            document.getElementById("spin-btn").disabled = true;
+            playAudio('spin');
+
+            try {
+                const response = await fetch(`${SERVER_URL}/api/wheel-spin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: urlUserId,
+                        amount: parseFloat(currentBet),
+                        wallet: urlWallet
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data && data.success === true) {
+                    balance = parseFloat(data.balance);
+                    if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+                    if (window.top) window.top.postMessage({ action: "refresh_wallet" }, "*");
+
+                    // 🎯 ব্যাকএন্ডের কোণ ডিগ্রির সাথে চাকার রিয়েল ৩ডি রোটেশন সিঙ্ক লক ভাই ভাই
+                    currentRotation += (3600 + data.targetAngle); 
+                    wheel.style.transform = `rotate(-${currentRotation}deg)`;
+
+                    setTimeout(() => {
+                        showFinalPrize(data.prizeText, data.winAmount);
+                    }, 5000); // ওরিজিনাল ৫ সেকেন্ড হাই-স্পিড স্পিন লুপ
+
+                } else {
+                    alert(data.message || "❌ Insufficient Balance! Please Recharge.");
+                    stopWheelState();
+                }
+            } catch (err) {
+                alert("⚠️ সেশন আউট! আবার স্পিন দিন ভাই ভাই।");
+                stopWheelState();
+            }
+        }
+
+        function showFinalPrize(prizeText, winAmount) {
+            const msgBox = document.getElementById("win-status-box");
+            const textMsg = document.getElementById("win-text-msg");
+
+            if (winAmount > 0) {
+                playAudio('win');
+                msgBox.className = "win-status-container win-glow-bar";
+                textMsg.innerText = `🏆 মেগা উইন!! আপনি পেয়েছেন: ${prizeText} (৳${winAmount})`;
+            } else {
+                msgBox.className = "win-status-container lose-glow-bar";
+                textMsg.innerText = "❌ ওহ! এই রাউন্ডে ভাগ্য সহায় হয়নি। আবার ট্রাই করুন ভাই!";
+            }
+
+            document.getElementById("user-balance").innerText = balance.toFixed(2);
+            stopWheelState();
+
+            if (isAuto) {
+                autoInterval = setTimeout(() => {
+                    if (isAuto) handleWheelSpin();
+                }, 2000);
+            }
+        }
+
+        function stopWheelState() {
+            isSpinning = false;
+            document.getElementById("spin-btn").disabled = false;
+            if (!isAuto && autoInterval) clearTimeout(autoInterval);
+        }
+
+        // 🎵 ৩টি ওরিজিনাল সাউন্ড ইঞ্জিন ইন্টিগ্রেশন ভাই
+        const slotSounds = {
+            click: new Audio('click.mp3'),
+            spin: new Audio('rolling.mp3'),
+            win: new Audio('win.mp3')
+        };
+        function playAudio(type) { try { slotSounds[type].currentTime = 0; slotSounds[type].play(); } catch(e){} }
+    </script>
+</body>
+</html>
