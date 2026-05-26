@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const MAIN_SITE_URL = "https://onrender.com"; 
+const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
 
 // 🎡 [আপনার ৪-কোণ ক্যানভাস চাকার ৩২টি ঘরের প্রফিট ম্যাট্রিক্স এবং ৯৫% RTP ওজন লক ভাই ভাই]
 const prizeMatrix = [
