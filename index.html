@@ -238,45 +238,48 @@
             }
         }
 
-                // 🎯 [মেগা undefined কিলার ও বাংলা সংখ্যা রূপান্তর গেটওয়ে লক ভাই ভাই]
+               // 🎯 [ফাইনাল উইন ব্যালেন্স রেসকিউ ইঞ্জিন ভাই ভাই]: এটি উইন এমাউন্ট আনডিফাইন্ড হওয়া চিরতরে ১০০% প্রতিরোধ করবে!
         function showFinalPrize(prizeText, winAmount) {
             const msgBox = document.getElementById("win-status-box");
             const textMsg = document.getElementById("win-text-msg");
 
-            // 🚀 স্ট্রং টাইপ কাস্টিং ট্রিকস: prizeText-কে স্ট্রিং বানিয়ে খোঁজা হচ্ছে, তাই জিরো পড়লে পারফেক্ট '০' আসবে ভাই!
             const cleanText = String(prizeText).trim();
             const targetIdx = prizesMap.indexOf(cleanText);
             const prizeBengali = (targetIdx !== -1) ? items[targetIdx] : cleanText;
 
-                        // 🎯 [০.৫ দশমিক উইন ডিসপ্লে ফিল্টার লক ভাই ভাই]: এটি ১ টাকা জিতলেও স্ক্রিনে কড়া গ্রিন সাকসেস বার ফায়ার করবে!
-            if (winAmount > 0 || parseFloat(prizeText) > 0) {
+            // যদি কোনো কারণে winAmount আনডিফাইন্ড আসে, তবে কোড রিয়েল-টাইমে বেট আর মাল্টিপ্লায়ার গুণ করে টাকা বের করে নিবে ভাই ভাই!
+            let finalWinCash = Number(winAmount);
+            if (isNaN(finalWinCash) || winAmount === undefined || winAmount === null) {
+                const multValue = parseFloat(cleanText) || 0;
+                finalWinCash = Math.floor(currentBet * multValue);
+            }
+
+            if (finalWinCash > 0) {
                 try {
-                    if (winAmount >= (currentBet * 5)) {
-                        playAudio('bigwin'); // ৫ গুণের বেশি জিতলে bigwin1.mp3 বাজবে ভাই
+                    if (finalWinCash >= (currentBet * 5)) {
+                        playAudio('bigwin');
                     } else {
-                        playAudio('win'); // সাধারণ দশমিক বা নরমাল জিতলে win1.mp3 বাজবে ভাই
+                        playAudio('win');
                     }
-                } catch(e) { console.log("Win audio error"); }
+                } catch(e) { console.error("Win audio lag"); }
 
                 msgBox.className = "win-status-container win-glow-bar";
-                textMsg.innerText = `🏆 মেগা উইন!! চাকা থেমেছে: ${prizeBengali} এর ঘরে (৳${winAmount})`;
+                textMsg.innerText = `🏆 মেগা উইন!! চাকা থেমেছে: ${prizeBengali} এর ঘরে (৳${finalWinCash})`;
             } else {
-                // চাকা পিউর ০ এর ঘরে থামলেই কেবল লস বার শো করবে ভাই ভাই!
                 msgBox.className = "win-status-container lose-glow-bar";
                 textMsg.innerText = `❌ চাকা থেমেছে: ${prizeBengali} এর ঘরে। এই রাউন্ডে ভাগ্য সহায় হয়নি ভাই!`;
             }
 
-
             document.getElementById("user-balance").innerText = balance.toFixed(2);
             stopWheelState();
 
-            // অটোপ্লে মোড সচল ট্র্যাকিং লুপ ভাই ভাই
             if (isAuto) {
                 autoInterval = setTimeout(() => {
                     if (isAuto) handleWheelSpin();
                 }, 2000);
             }
         }
+         
 
         function stopWheelState() {
             isSpinning = false;
