@@ -89,6 +89,7 @@
             { text: "x0", color: "#34495e" }, { text: "x1", color: "#2ecc71" }
         ];
 
+                // 🎯 [মেগা ২৪-ঘর টেক্সট এলাইনার ও ক্ল্যারিটি বুস্টার ভাই ভাই]
         const wheel = document.getElementById("main-wheel");
         prizes.forEach((prize, index) => {
             const angle = (360 / prizes.length) * index;
@@ -98,13 +99,15 @@
             segment.style.transform = `rotate(${angle}deg)`;
             segment.style.clipPath = "polygon(0 100%, 100% 0, 100% 45%)";
             
+            // 🚀 ট্রান্সফর্ম ম্যাপ ৭.৫ ডিগ্রি মিড-পয়েন্টে লক করে চাকা থেকে ৭০px ওপরে সুন্দর পুশ করা হলো ভাই ভাই!
             segment.innerHTML = `
-                <div class="segment-content" style="transform: rotate(7deg) translate(10px, -5px); font-size: 8px;">
+                <div class="segment-content" style="transform: rotate(7.5deg) translateY(-70px); font-size: 10px;">
                     ${prize.text}
                 </div>
             `;
             wheel.appendChild(segment);
         });
+
 
         if (typeof io !== 'undefined') {
             const socket = io();
