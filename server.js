@@ -7,7 +7,7 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 
-// 🎯 [উইনগো কালার ট্রেড সিঙ্ক - মেগা সকেট প্রোটোকল লক]
+// 🎯 [উইনগো কালার ট্রেড সিঙ্ক - মেগা সকেট প্রোটকল লক]
 const io = socketIo(server, {
     cors: { origin: "*", methods: ["GET", "POST"] }
 });
@@ -25,37 +25,37 @@ app.use((req, res, next) => {
 });
 
 // 🎰 [উইনগো কালার ট্রেড ওরিজিনাল ডোমেইন সিঙ্ক]
-const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
+const MAIN_SITE_URL = "https://onrender.com"; 
 
-// 🎡 [আপনার স্কেচ অনুযায়ী ৩টি ফিজিক্যাল আইটেম বাদে পিউর ২৪-ঘরের ওরিজিনাল ব্যাকএন্ড প্রফিট তালিকা ভাই ভাই]
+// 🎡 [আপনার ক্যানভাস চাকার ২৪টি ঘরের প্রফিট ম্যাট্রিক্স এবং ৯৫% RTP ওজন লক ভাই ভাই]
 const prizeMatrix = [
-    { text: "1000", multiplier: 1000.00, weight: 1 },  // ১০০০ গুণের মেগা ঘর (কম পড়বে ভাই)
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর (বেশি পড়বে লাভ ধরে রাখতে ভাই ভাই)
-    { text: "1.5", multiplier: 1.50, weight: 20 },     // ১.৫ গুণ সাধারণ উইন
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "2", multiplier: 2.00, weight: 18 },       // ২ গুণ উইন
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "5", multiplier: 5.00, weight: 10 },       // ৫ গুণ উইন
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "10", multiplier: 10.00, weight: 6 },      // ১০ গুণ উইন
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "20", multiplier: 20.00, weight: 4 },      // ২০ গুণ উইন
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "50", multiplier: 50.00, weight: 2 },      // ৫০ গুণ জ্যাকপট
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "100", multiplier: 100.00, weight: 1 },    // ১০০ গুণ জ্যাকপটি
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "200", multiplier: 200.00, weight: 1 },    // ২০০ গুণ জ্যাকপট
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "500", multiplier: 500.00, weight: 1 },    // ৫০০ গুণ মেগা জ্যাকপট
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "2", multiplier: 2.00, weight: 18 },       // ২ গুণ উইন
-    { text: "0", multiplier: 0, weight: 35 },          // ০ বা লস ঘর
-    { text: "5", multiplier: 5.00, weight: 10 },       // ৫ গুণ উইন
-    { text: "0", multiplier: 0, weight: 35 }           // ০ বা লস ঘর
+    { text: "১", multiplier: 1.00, weight: 20 },      // Index 0: 1x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 1: 0 Loss
+    { text: "১.৫", multiplier: 1.50, weight: 18 },    // Index 2: 1.5x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 3: 0 Loss
+    { text: "২", multiplier: 2.00, weight: 15 },      // Index 4: 2x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 5: 0 Loss
+    { text: "৩", multiplier: 3.00, weight: 12 },      // Index 6: 3x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 7: 0 Loss
+    { text: "৫", multiplier: 5.00, weight: 10 },      // Index 8: 5x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 9: 0 Loss
+    { text: "১০", multiplier: 10.00, weight: 6 },     // Index 10: 10x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 11: 0 Loss
+    { text: "২০", multiplier: 20.00, weight: 4 },     // Index 12: 20x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 13: 0 Loss
+    { text: "৫০", multiplier: 50.00, weight: 2 },     // Index 14: 50x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 15: 0 Loss
+    { text: "১০০", multiplier: 100.00, weight: 1 },   // Index 16: 100x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 17: 0 Loss
+    { text: "২০০", multiplier: 200.00, weight: 1 },   // Index 18: 200x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 19: 0 Loss
+    { text: "৫০০", multiplier: 500.00, weight: 1 },   // Index 20: 500x Win
+    { text: "০", multiplier: 0.00, weight: 35 },      // Index 21: 0 Loss
+    { text: "১০০০", multiplier: 1000.00, weight: 1 }, // Index 22: 1000x Win
+    { text: "০", multiplier: 0.00, weight: 35 }       // Index 23: 0 Loss
 ];
 
-// 💰 ১. লাইভ অ্যাকাউন্ট ব্যালেন্স নিয়ে আসার ডেডিকেটেড গেটওয়ে
+// 💰 লাইভ অ্যাকাউন্ট ব্যালেন্স নিয়ে আসার ডেডিকেটেড এপিআই
 app.get('/api/wheel-balance', async (req, res) => {
     const { userId, wallet } = req.query;
     try {
@@ -67,13 +67,12 @@ app.get('/api/wheel-balance', async (req, res) => {
     } catch (e) { return res.json({ success: false, balance: 0 }); }
 });
 
-// 🛫 ২. লাকি হুইল কোর স্পিন মেগা রাউট (POST Route - ৯৫% RTP গাণিতিক অ্যালগরিদম বর্ম লক ভাই ভাই!)
+// 🛫 ৩ডি ক্যানভাস স্পিন সমন্বিত এপিআই রাউট (POST Route - ৯৫% RTP বর্ম লক ভাই ভাই!)
 app.post('/api/wheel-spin', async (req, res) => {
     const { userId, amount, wallet } = req.body;
     const targetWallet = wallet || "main";
     const reqAmount = parseFloat(amount) || 50;
 
-    // 🔒 ১ থেকে ২০০০ বিডিটি পর্যন্ত কড়া বেট সিকিউরিটি রুলস ফিল্টার লক ভাই ভাই
     if (reqAmount < 1 || reqAmount > 2000) {
         return res.json({ success: false, message: "🚨 Invalid Bet Amount (৳১ - ৳২০০০)" });
     }
@@ -96,7 +95,6 @@ app.post('/api/wheel-spin', async (req, res) => {
         let prizeIndex = null;
 
         if (adminTriggeredPrize) {
-            // যদি এডমিন গোপন প্যানেল থেকে কোনো নির্দিষ্ট সংখ্যা উইন করায় (iPhone/Bike বাদ দিয়ে শুধু সংখ্যা ভাই)
             let matchingIndices = [];
             prizeMatrix.forEach((p, idx) => {
                 if (p.text === adminTriggeredPrize) matchingIndices.push(idx);
@@ -106,24 +104,20 @@ app.post('/api/wheel-spin', async (req, res) => {
             }
         }
 
-        // 🎰 [৯৫% ওরিজিনাল RTP ম্যাথমেটিক্স সচল লুপ ভাই ভাই]: যদি এডমিন ট্রিগার ফাঁকা থাকে
+        // 🎰 [৯৫% ওরিজিনাল RTP ম্যাথমেটিক্স সচল লুপ ভাই ভাই]
         if (prizeIndex === null) {
-            // ১ থেকে ১০০০০% এর মধ্যে নিখুঁত ওয়েটেড র্যান্ডম পুল তৈরি করা হলো ভাই
             let pool = [];
             prizeMatrix.forEach((prize, idx) => {
                 for (let i = 0; i < prize.weight; i++) {
                     pool.push(idx);
                 }
             });
-            // পুল থেকে ৯৫% আরটিপি রুলস মেনে ঘর সিলেক্ট হলো ভাই ভাই
             prizeIndex = pool[Math.floor(Math.random() * pool.length)];
         }
 
-        // ব্যাকআপ সেফটি লকিং জ্যাম ক্লিয়ারার (ডিফল্ট লস ঘর)
         if (prizeIndex === null) prizeIndex = 1;
 
         const selectedPrize = prizeMatrix[prizeIndex];
-        const targetAngle = (prizeIndex * 15) + 7.5; // ২৪ ঘরের জন্য কৌণিক দূরত্ব ১৫ ডিগ্রি ভাই ভাই
 
         let winAmount = 0;
         let dbAction = "bet";
@@ -160,8 +154,8 @@ app.post('/api/wheel-spin', async (req, res) => {
             return res.json({
                 success: true,
                 balance: response.data.balance,
-                targetAngle: targetAngle,
-                prizeText: selectedPrize.text,
+                winningIndex: prizeIndex, // 🎡 ফ্রন্টএ্যান্ড ক্যানভাস চাকা ঘোরানোর জন্য আসল চাবিকাঠি লক হলো ভাই!
+                winValue: selectedPrize.text,
                 winAmount: winAmount
             });
         } else {
@@ -170,7 +164,6 @@ app.post('/api/wheel-spin', async (req, res) => {
         }
 
     } catch (e) {
-        console.error("Lucky Wheel 95% RTP Engine Error:", e.message);
         return res.json({ success: false, message: "⚠️ Timeout! Click SPIN again." });
     }
 });
@@ -178,4 +171,4 @@ app.post('/api/wheel-spin', async (req, res) => {
 app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'index.html')); });
 
 const PORT = process.env.PORT || 14000;
-server.listen(PORT, () => { console.log(`🎡 Royal Lucky Wheel 95% RTP Engine Running on port ${PORT}`); });
+server.listen(PORT, () => { console.log(`🎡 Royal Lucky Wheel Canvas Engine Running on port ${PORT}`); });
