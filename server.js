@@ -156,6 +156,7 @@ app.post('/api/wheel-spin', async (req, res) => {
 
         const response = await axios.post(MAIN_SITE_URL + '/api_callback.php', phpPayload, { timeout: 30000 });
 
+        // 🎯 [মেগা রেসপন্স ডাটা উইন সিঙ্কার লক ভাই ভাই]: এটি উইন এমাউন্ট সরাসরি ফ্রন্টএন্ডের পেটে নিখুঁত ট্রান্সফার করবে!
         if (response.data && response.data.status === "ok") {
             io.emit("balanceUpdate", { username: userId, balance: response.data.balance });
 
@@ -163,7 +164,8 @@ app.post('/api/wheel-spin', async (req, res) => {
                 success: true,
                 balance: response.data.balance,
                 prizeText: selectedPrize.text,
-                targetAngle: targetAngle
+                targetAngle: targetAngle,
+                winAmount: Number(winAmount) // 🚀 পিউর নাম্বার ফরম্যাটে ৫০০ বা সঠিক উইন টাকা এখানে পাস লক হলো ভাই ভাই!
             });
         } else {
             let latestBal = (response.data && response.data.balance !== undefined) ? response.data.balance : currentDbBalance;
