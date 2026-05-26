@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 // 🎰 [উইনগো কালার ট্রেড ওরিজিনাল ডোমেইন সিঙ্ক]
-const MAIN_SITE_URL = "https://onrender.com"; 
+const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
 
 // 🎡 [আপনার ক্যানভাস চাকার ২৪টি ঘরের প্রফিট ম্যাট্রিক্স এবং ৯৫% RTP ওজন লক ভাই ভাই]
 const prizeMatrix = [
