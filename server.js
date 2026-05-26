@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const MAIN_SITE_URL = "https://onrender.com"; 
+const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
 
 // 🎡 [আপনার রিকোয়ারমেন্ট অনুযায়ী ৩টি ফিজিক্যাল আইটেম বাদে পিউর ২৪-ঘরের ওরিজিনাল ব্যাকএন্ড প্রফিট তালিকা ভাই ভাই]
 const prizeMatrix = [
