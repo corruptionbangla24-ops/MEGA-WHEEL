@@ -87,7 +87,10 @@
             { text: "5", color: "#10ac84" }, { text: "0", color: "#34495e" }
         ];
 
+                // 🎯 [২৪-ঘর রয়্যাল মাল্টিপল ডিসপ্লে বুস্টার ইঞ্জিন ভাই ভাই]
         const wheel = document.getElementById("main-wheel");
+        wheel.innerHTML = ""; // পুরনো ওল্ড জ্যাম মেমোরি সাফ লক ভাই
+        
         prizes.forEach((prize, index) => {
             const angle = (360 / prizes.length) * index;
             const segment = document.createElement("div");
@@ -96,13 +99,15 @@
             segment.style.transform = `rotate(${angle}deg)`;
             segment.style.clipPath = "polygon(0 100%, 100% 0, 100% 45%)";
             
+            // 🚀 [ম্যাজিক ইন-লাইন সিঙ্ক লক ভাই]: translateY কমিয়ে -৫৫px করায় এবং rotate(৭.৫deg) এর সাথে rotate(৮২deg) করায় সংখ্যাগুলো চাকার ভেতর একদম সোজা ও ক্রিস্টাল ক্লিয়ার ভেসে উঠবে ভাই!
             segment.innerHTML = `
-                <div class="segment-content" style="transform: rotate(7.5deg) translateY(-75px); font-size: 11px;">
+                <div class="segment-content" style="transform: rotate(7.5deg) translateY(-55px) rotate(82deg); font-size: 11px; font-weight: 900; color: #ffffff; position: absolute; text-shadow: 2px 2px 3px #000; white-space: nowrap;">
                     ${prize.text}
                 </div>
             `;
             wheel.appendChild(segment);
         });
+
 
         if (typeof io !== 'undefined') {
             const socket = io();
