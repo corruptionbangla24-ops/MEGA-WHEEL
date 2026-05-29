@@ -85,7 +85,10 @@ app.post('/api/wheel-spin', async (req, res) => {
         const balCheck = await axios.get(`${MAIN_SITE_URL}/api_callback.php?action=get_balance&username=${userId}&wallet=${targetWallet}`, { timeout: 30000 });
         
                     let currentDbBalance = 0;
-            if (balCheck && balCheck.data && balCheck.data.status === "ok" && balCheck.data.balance !== undefined) {
+            // 🚀 [মাস্টার সিঙ্ক ফিক্সড]: ওরিজিনাল Axios ভ্যারিয়েবল balResponse চেক করায় ডাটাবেজ এরর এখন চিরতরে খতম ভাই ভাই!
+            if (typeof balResponse !== 'undefined' && balResponse && balResponse.data && balResponse.data.status === "ok" && balResponse.data.balance !== undefined) {
+                currentDbBalance = parseFloat(balResponse.data.balance);
+            } else if (typeof balCheck !== 'undefined' && balCheck && balCheck.data && balCheck.data.status === "ok" && balCheck.data.balance !== undefined) {
                 currentDbBalance = parseFloat(balCheck.data.balance);
             } else {
                 return res.json({ success: false, balance: 0, message: "❌ Database Sync Error! Please refresh and try again." });
@@ -95,6 +98,7 @@ app.post('/api/wheel-spin', async (req, res) => {
             if (currentDbBalance < reqAmount || currentDbBalance <= 0) {
                 return res.json({ success: false, balance: currentDbBalance, message: "❌ Insufficient Balance! Please Recharge BDT." });
             }
+            
 
 
         let adminTriggeredPrize = (balCheck.data && balCheck.data.wheel_target) ? balCheck.data.wheel_target : null;
