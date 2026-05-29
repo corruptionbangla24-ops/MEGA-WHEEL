@@ -81,7 +81,26 @@ app.post('/api/wheel-spin', async (req, res) => {
         return res.json({ success: false, message: "🚨 Invalid Bet Amount (৳১ - ৳২০০০)" });
     }
 
-    
+   try {
+        // 🔒 [ব্যালেন্স যাচাই]: বাজি প্লে করার আগে ডাটাবেজ থেকে রিয়েল টাকা নিশ্চিত করার চাবি
+        const balResponse = await axios.post(`${MAIN_SITE_URL}/api_callback.php`, {
+            action: "bet",
+            username: userId,
+            amount: 0,
+            wallet: targetWallet
+        }, { timeout: 30000 });
+        
+        let currentDbBalance = 0;
+        if (balResponse.data && balResponse.data.status === "ok" && balResponse.data.balance !== undefined) {
+            currentDbBalance = parseFloat(balResponse.data.balance);
+        } else {
+            return res.json({ success: false, balance: 0, message: "❌ Database Sync Error! Please refresh and try again." });
+        }
+
+        // 🔒 [ইনসাফিসিয়েন্ট প্রোটেকশন বর্ম]: অ্যাকাউন্টে টাকা কম থাকলে বা জিরো ব্যালেন্স হলে বাজি রিফিউজড ভাই ভাই!
+        if (currentDbBalance < reqAmount) {
+            return res.json({ success: false, balance: currentDbBalance, message: "❌ Insufficient Balance! Please Recharge BDT." });
+        } 
             
 
 
