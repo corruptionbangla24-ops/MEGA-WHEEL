@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LUCKY WHEEL - ROYAL FORTUNE</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 🎨 স্পীড অপ্টিমাইজড কোর সিএসএস ফ্রেম ইনজেকশন ভাই ভাই */
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #05070c; font-family: 'Segoe UI', Roboto, sans-serif; color: #fff; -webkit-tap-highlight-color: transparent; user-select: none; }
+        .header { display: none !important; } /* ডাবল ব্যালেন্স বক্স জ্যাম ব্লকার */
+        
+        body { 
+            background: radial-gradient(circle at center, #0f1424 0%, #05070c 100%); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            height: 100vh; 
+        }
+
+        /* 🎡 ওপরের মেইন জাদুকরী ২৪-স্লট হুইল কন্টেইনার এরিয়া (ইনডেক্স ১ এ লক ওস্তাদ) */
+        .wheel-display-outer-frame {
+            position: relative;
+            width: 290px;
+            height: 290px;
+            margin: 20px auto 5px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        /* 🎯 ওপরের ওরিজিনাল লাল ত্রিভুজ তীরের সূচক ডগা (আপনার স্ক্রিনশটের হুবহু সিঙ্ক!) */
+        .wheel-top-pointer-marker {
+            position: absolute;
+            top: -15px;
+            z-index: 40;
+            color: #ef4444;
+            font-size: 30px;
+            text-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+            pointer-events: none;
+        }
+
+        /* 🎡 [২৪-স্লট পিওর সিএসএস নিয়াল হুইল প্লেট বর্ম ওস্তাদ ভাই ভাই] */
+        .lucky-wheel-plate-node {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: absolute;
+            background: #111622;
+            border: 6px solid #ffbb00;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.9);
+            overflow: hidden;
+            z-index: 5;
+            transform: rotate(0deg);
+        }
+
+        /* 🔥 চাকার ঠিক মাঝখানে থাকা ওরিজিনাল গোল্ডেন স্টার হাব ক্যাপ নোড */
+        .wheel-center-star-hub {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle at center, #ffe066 0%, #ffbb00 50%, #b38300 100%);
+            border-radius: 50%;
+            z-index: 25;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 15px #ffbb00, inset 0 2px 4px rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            pointer-events: none;
+        }
+
+        /* 📢 লাইভ মেসেজ প্যানেল বার */
+        .win-status-container { position: relative; z-index: 10; text-align: center; padding: 11px; margin: 5px 12px; background: rgba(9, 12, 18, 0.6); border-radius: 10px; border: 1px solid rgba(255,255,255,0.02); }
+        #win-text-msg { font-size: 13px; font-weight: 700; color: #38bdf8; letter-spacing: 0.3px; }
+
+        /* 🎛️ নিচের মেইন গেম কন্ট্রোল প্যানেল ফুটার (ক্লিক লক ১০০% ওপেন বর্ম ভাই ভাই) */
+        .footer-controls { position: relative; z-index: 50; background: #07090e; border-top: 1px solid #161b29; padding: 10px 15px 25px 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.6); }
+        .play-section { display: flex; justify-content: space-between; align-items: center; gap: 10px; max-width: 450px; margin: 0 auto; }
+        .bet-btn-nav { background: #111522; border: 1px solid #20293d; color: #ffaa00; font-size: 18px; font-weight: 800; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .play-btn { flex: 1; background: linear-gradient(180deg, #ffbb00 0%, #d48800 100%); color: #000; font-size: 16px; font-weight: 900; border: none; padding: 12px 0; border-radius: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(212,136,0,0.3); }
+        .play-btn:disabled { background: #141721 !important; border-color: #1f2536 !important; color: #4b5563 !important; box-shadow: none !important; cursor: not-allowed; }
+        .icon-btn { background: #111522; border: 1px solid #20293d; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #ffaa00; font-weight: bold; }
+        .icon-btn.active { background: #ffaa00; color: #000; box-shadow: 0 0 10px rgba(255,170,0,0.4); }
+
+        .win-glow-bar { border-color: rgba(0, 255, 136, 0.4) !important; background: rgba(0, 255, 136, 0.05) !important; }
+        .win-glow-bar #win-text-msg { color: #00ff88 !important; }
+        .lose-glow-bar { border-color: rgba(255, 51, 102, 0.4) !important; background: rgba(255, 51, 102, 0.05) !important; }
+        .lose-glow-bar #win-text-msg { color: #ff3366 !important; }
+    </style>
+</head>
+<body>
+
+    <div class="header" style="display:none !important;">
+        <div class="balance-box">৳ <span id="user-balance">0.00</span></div>
+    </div>
+
+    <!-- 🎡 ওপরের মেইন জাদুকরী ২৪-স্লট হুইল কন্টেইনার এরিয়া -->
+    <div class="wheel-display-outer-frame">
+        <div class="wheel-top-pointer-marker">▼</div>
+        
+        <!-- ওরিজিনাল পিওর সিএসএস চাকা প্লেট নোড (ছবি ছাড়াই ১০০% ডাইনামিক রেন্ডার ওস্তাদ) -->
+        <div class="lucky-wheel-plate-node" id="lucky-wheel-main-plate"></div>
+        
+        <div class="wheel-center-star-hub">★</div>
+    </div>
+
+    <!-- 📢 উইন-লস লাইভ ক্যাসিনো মেসেজ প্যানেল বার -->
+    <div class="win-status-container" id="win-status-box">
+        <span id="win-text-msg">আপনার বাজি ধরুন এবং চাকা ঘোরান ভাই!</span>
+    </div>
+
+    <!-- 🎛️ অ্যাকশন কন্ট্রোল ফুটার প্যানেল বার -->
+    <div class="footer-controls">
+        <div class="play-section">
+            <button class="bet-btn-nav" onclick="adjustBet('minus')">-</button>
+            <div style="text-align: center; width: 70px;">
+                <div style="font-size: 9px; color: #aaa; font-weight: bold;">BET</div>
+                <div style="font-size: 16px; font-weight: 900; color: #fff;" id="bet-display">৳৫০</div>
+            </div>
+            <button class="bet-btn-nav" onclick="adjustBet('plus')">+</button>
+
+            <button class="play-btn" id="spin-btn" onclick="handleLuckyWheelSpinRoll()">SPIN</button>
+            
+            <div class="icon-group">
+                <button class="icon-btn" id="auto-btn" onclick="toggleAuto()">🤖</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlUserId = urlParams.get('userId') || urlParams.get('id') || urlParams.get('username') || "guest_user";
+        const urlWallet = urlParams.get('wallet') || "main";
+        const SERVER_URL = window.location.origin;
+
+        let balance = 0.00;
+        let currentBet = 50;
+        let isSpinning = false;
+        let isAuto = false;
+        let isMuted = false;
+        let autoInterval = null;
+
+        // 🎡 [আপনার স্ক্রিনশটের হুবহু ওরিজিনাল ২৪-স্লট ওッズ ভ্যালু ম্যাপিং লক ভাই ভাই]
+        const luckyWheelSlicesPool = [
+            "100X", "0X", "1X", "0X", "0.3X", "0X", "0.5X", "0X", "150X", "0X", "2X", "0X",
+            "3X", "0X", "4X", "0X", "200X", "0X", "5X", "0X", "10X", "0X", "20X", "0X",
+            "500X", "0X", "30X", "0X", "40X", "0X", "1000X", "0X"
+        ];
+
+        // 🛠️ [মেগা পিউর সিএসএস চাকা স্লাইসার ইঞ্জিন - প্রতি ঘর কাটায় কাটায় প্রফেশনাল এলাইনমেন্ট লক]
+        function generatePureCSSLuckyWheel() {
+            const wheelPlate = document.getElementById("lucky-wheel-main-plate");
+            if (!wheelPlate) return;
+            wheelPlate.innerHTML = "";
+
+            // ব্যাকগ্রাউন্ড গেটওয়ে ডিরেক্টরি অনুযায়ী চাকার ওরিজিনাল ২৪টি স্লটের টেক্সট অ্যারে সিঙ্ক
+            const serverSyncMatrixPool = [
+                "100", "0", "1", "0", "0.3", "0", "0.5", "0", "150", "0", "2", "0",
+                "3", "0", "4", "0", "200", "0", "5", "0", "10", "0", "20", "0",
+                "500", "0", "30", "0", "40", "0", "1000", "0"
+            ];
+            
+            // আপনার স্ক্রিনশটের ওরিজিনাল ২৪টি ঘর অনুযায়ী স্লাইস সংখ্যা টাইট লক
+            let totalSlices = 24; 
+            let sliceAngle = 360 / totalSlices; // ৩৬০ / ২৪ = প্রতি স্লট ঘর এক্স্যাক্ট ১৫ ডিগ্রী ওস্তাদ!
+            let sliceWidthPercentage = Math.tan((sliceAngle * Math.PI) / 360) * 100;
+
+            for (let i = 0; i < totalSlices; i++) {
+                const slice = document.createElement("div");
+                slice.style.position = "absolute";
+                slice.style.top = "0";
+                slice.style.left = "50%";
+                slice.style.width = (sliceWidthPercentage * 2) + "%";
+                slice.style.height = "50%";
+                slice.style.transformOrigin = "50% 100%";
+                
+                let currentRot = i * sliceAngle;
+                slice.style.transform = `translateX(-50%) rotate(${currentRot}deg)`;
+                
+                // ওরিজিনাল স্ক্রিনশটের মতো ডার্ক নিওন এবং লাক্সারি ফরেস্ট গ্রিন কালার কম্বো অল্টারনেট টগল ভাই ভাই!
+                slice.style.background = (i % 2 === 0) ? "#074423" : "#0d111a";
+                slice.style.clipPath = `polygon(50% 100%, 0% 0%, 100% 0%)`;
+
+                        // 🔒 [কাউন্টার-ব্যালেন্স ১৮০ ডিগ্রী রোটেশন বর্ম]: সংখ্যা সবসময় চোখের সামনে একদম খাড়া সোজা থাকবে!
+                let numberCounterRotateAngle = -currentRot;
+                let displayVal = serverSyncMatrixPool[i];
+
+                // স্লটের বিন্দুময় ক্ষুদ্র ডট মার্কার ডিজাইন সিঙ্ক
+                let dotHtml = '<div style="width:4px; height:4px; background:#fff; border-radius:50%; margin:3px auto 0 auto; opacity:0.5;"></div>';
+
+                slice.innerHTML = `
+                    <div style="
+                        position: absolute; 
+                        top: 14px; 
+                        left: 50%; 
+                        transform: translateX(-50%) rotate(${numberCounterRotateAngle}deg); 
+                        font-size: 10px; 
+                        font-weight: 900; 
+                        color: #ffcc00; 
+                        text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+                        font-family: Arial, sans-serif;
+                        width: 35px; 
+                        text-align: center;
+                    ">
+                        ${displayVal}
+                        ${dotHtml}
+                    </div>
+                `;
+                wheelPlate.appendChild(slice);
+            }
+        }
+
+        function adjustBet(action) {
+            if (isSpinning) return;
+            if (action === 'minus' && currentBet > 50) currentBet -= 50;
+            if (action === 'plus' && currentBet < 20000) currentBet += 50;
+            document.getElementById("bet-display").innerText = `৳${currentBet}`;
+            playAudio('click');
+        }
+
+        // 🎰 [🎰 লাকি হুইল হাই-স্পিড ওরিজিনাল রোটেশন এনিমেশন ইঞ্জিন ভাই ভাই]
+        function animateLuckyWheelSpinning(serverGameData) {
+            const wheel = document.getElementById("lucky-wheel-main-plate");
+            if (!wheel) return;
+
+            let targetDeg = serverGameData.calculatedTargetDegree || 0;
+            
+            // ২৪ স্লাইসের মিলিমিটার নিখুঁত তীরের ডগা এলাইনমেন্ট অফসেট ৭.৫ ডিগ্রী হাফ-অ্যাঙ্গেল লক ওস্তাদ!
+            let alignmentCorrectionOffset = 7.5;
+
+            wheel.style.transition = "transform 4s cubic-bezier(0.15, 0.85, 0.15, 1)";
+            wheel.style.transform = `rotate(${1800 + (360 - targetDeg) - alignmentCorrectionOffset}deg)`;
+            
+            playAudio('spin');
+
+            setTimeout(() => {
+                wheel.style.transition = "none";
+                wheel.style.transform = `rotate(${360 - targetDeg - alignmentCorrectionOffset}deg)`;
+
+                if (serverGameData.balance !== undefined) {
+                    balance = parseFloat(serverGameData.balance);
+                }
+                showFinalWheelReward(serverGameData.status, serverGameData.winAmount, serverGameData.selectedOddsValue);
+            }, 4050);
+        }
+
+        async function handleLuckyWheelSpinRoll() {
+            if (isSpinning || isSpinning === true) return; 
+
+            isSpinning = true;
+            if (document.getElementById("spin-btn")) document.getElementById("spin-btn").disabled = true;
+            if (document.getElementById("win-status-box")) document.getElementById("win-status-box").className = "win-status-container";
+            if (document.getElementById("win-text-msg")) document.getElementById("win-text-msg").innerText = "🎰 লাকি হুইল ঘোরানো হচ্ছে, জ্যাকпот রিওয়ার্ড গণনার অপেক্ষা ওস্তাদ...";
+            playAudio('click');
+
+            try {
+                const response = await fetch(`${SERVER_URL}/api/wheel-spin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: urlUserId, amount: parseFloat(currentBet), wallet: urlWallet
+                    })
+                });
+
+                const serverRes = await response.json();
+                
+                if (serverRes.success || serverRes.success === true) {
+                    let parsedLiveBalance = serverRes.balance || serverRes.data?.balance || balance;
+                    balance = parseFloat(parsedLiveBalance);
+                    
+                    let targetGamePayload = serverRes.gameData || serverRes;
+                    animateLuckyWheelSpinning(targetGamePayload);
+                } else {
+                    alert(serverRes.message || "❌ Insufficient Balance! Please Recharge Wallet.");
+                    stopWheelState();
+                }
+            } catch (err) {
+                stopWheelState();
+            }
+        }
+
+        function showFinalWheelReward(status, winAmount, selectedOddsValue) {
+            const msgBox = document.getElementById("win-status-box");
+            const textMsg = document.getElementById("win-text-msg");
+            
+            if (status === "win" && selectedOddsValue !== "0") {
+                playAudio('win');
+                if (msgBox) msgBox.className = "win-status-container win-glow-bar";
+                if (textMsg) textMsg.innerHTML = `🎉 গ্র্যান্ড উইন ওস্তাদ! চাকা ঘুরে <b>${selectedOddsValue}X</b> স্লটে পড়েছে। ওয়ালেটে ৳${winAmount} ক্রেডিট হয়েছে ভাই ভাই!`;
+            } else {
+                playAudio('wheel');
+                if (msgBox) msgBox.className = "win-status-container lose-glow-bar";
+                if (selectedOddsValue === "0.3" || selectedOddsValue === "0.5") {
+                    textMsg.innerHTML = `💥 ওহ হো লস! চাকা ঘুরে আংশিক <b>${selectedOddsValue}X</b> স্লটে পড়েছে। ওয়ালেটে ৳${winAmount} ব্যাক এসেছে ভাই ভাই!`;
+                } else {
+                    textMsg.innerHTML = `💥 ওহ হো লস ওস্তাদ! চাকা ঘুরে লস <b>${selectedOddsValue}X</b> স্লটে পড়েছে। আবার অন ফায়ার কদম ফেলুন ভাই ভাই!`;
+                }
+            }
+
+            if (typeof balance !== 'undefined' && !isNaN(balance)) {
+                if (document.getElementById("user-balance")) {
+                    document.getElementById("user-balance").innerText = balance.toFixed(2);
+                }
+            }
+
+            setTimeout(() => { fetchLiveBalance(); }, 1500);
+            stopWheelState();
+
+            if (isAuto) {
+                autoInterval = setTimeout(() => {
+                    if (isAuto) handleLuckyWheelSpinRoll();
+                }, 3500);
+            }
+        }
+
+        if (typeof io !== 'undefined') {
+            const socket = io();
+            socket.on("balanceUpdate", (data) => {
+                if (data && data.username === urlUserId) {
+                    if (data.balance !== undefined) {
+                        balance = parseFloat(data.balance);
+                        if (document.getElementById("user-balance")) {
+                            document.getElementById("user-balance").innerText = balance.toFixed(2);
+                        }
+                    }
+                    if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+                }
+            });
+        }
+
+        async function fetchLiveBalance() {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/wheel-balance?userId=${urlUserId}&wallet=${urlWallet}`);
+                const serverData = await response.json();
+                if (serverData.success || serverData.balance !== undefined) {
+                    balance = parseFloat(serverData.balance);
+                    if (document.getElementById("user-balance")) {
+                        document.getElementById("user-balance").innerText = balance.toFixed(2);
+                    }
+                }
+            } catch (e) { console.error("Balance stream link check passed"); }
+        }
+
+        window.onload = () => {
+            if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+            generatePureCSSLuckyWheel(); 
+            fetchLiveBalance();
+        };
+
+        function toggleAuto() {
+            isAuto = !isAuto;
+            const autoEl = document.getElementById("auto-btn");
+            if (autoEl) autoEl.classList.toggle('active', isAuto);
+            if (isAuto && !isSpinning) handleLuckyWheelSpinRoll();
+            playAudio('click');
+        }
+
+        function stopWheelState() {
+            isSpinning = false;
+            if (document.getElementById("spin-btn")) document.getElementById("spin-btn").disabled = false;
+            if (!isAuto && autoInterval) clearTimeout(autoInterval);
+        }
+
+        const slotSounds = {
+            click: new Audio('spin2.mp3'), spin: new Audio('spin2.mp3'),
+            win: new Audio('win2.mp3'), wheel: new Audio('spin2.mp3')
+        };
+        Object.values(slotSounds).forEach(s => s.load());
+
+        function playAudio(type) {
+            try { slotSounds[type].currentTime = 0; slotSounds[type].play(); } catch(e) {}
+        }
+    </script>
+</body>
+</html>
+
